@@ -1,8 +1,7 @@
-// src/pages/BabySitter.jsx
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { jwtDecode } from 'jwt-decode'; // Import jwtDecode correctly
+import { jwtDecode } from 'jwt-decode';
+ // Import jwtDecode correctly
 
 const BabySitter = () => {
   const [nannies, setNannies] = useState([]);
@@ -37,13 +36,6 @@ const BabySitter = () => {
     const token = localStorage.getItem('token');
     if (!token) {
       alert('Please log in to add a nanny to your cart.');
-      return;
-    }
-
-    // Check if the nanny is already in the cart
-    const isNannyInCart = cart.some(item => item._id === nanny._id);
-    if (isNannyInCart) {
-      alert(`${nanny.firstName} ${nanny.lastName} is already in your cart!`);
       return;
     }
 
@@ -122,4 +114,4 @@ const BabySitter = () => {
   );
 };
 
-export default BabySitter; 
+export default BabySitter;
