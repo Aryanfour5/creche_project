@@ -33,8 +33,6 @@ const App = () => {
         <Route path="/Purchased" element={<PurchasedNannies />} />
         <Route path="/chatbot" element={<ChatBot />} /> {/* Add the route for ChatBot */}
       </Routes>
-
-      <OurPolicy />
       <Footer />
     </div>
   );

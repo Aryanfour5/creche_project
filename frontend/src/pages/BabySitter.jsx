@@ -101,7 +101,7 @@ const BabySitter = () => {
                 <p className="text-gray-600">Rate: ${nanny.rate} / hour</p>
               </div>
               <button
-                className="w-full bg-black text-white py-2 rounded-b-lg hover:bg-green-600"
+                className="w-full bg-blue-500 text-white py-2 rounded-b-lg hover:bg-green-600"
                 onClick={() => handleAddToCart(nanny)}
               >
                 Add to Cart

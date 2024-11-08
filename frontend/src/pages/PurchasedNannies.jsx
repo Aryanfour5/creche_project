@@ -10,6 +10,7 @@ const PurchasedNannies = () => {
     const [userLocation, setUserLocation] = useState("123 Main St, Anytown"); // User location
     const [showCalendar, setShowCalendar] = useState(false); // To control visibility of calendar
 
+    
     useEffect(() => {
         // Fetch purchased nannies data from backend
         const fetchPurchasedNannies = async () => {
