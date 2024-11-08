@@ -114,6 +114,51 @@ export const listNannies = async (req, res) => {
     }
 };
 
+export const getNanniesWithRatings = async (req, res) => {
+  try {
+    const nannies = await Nanny.aggregate([
+      {
+        $lookup: {
+          from: 'feedbacks', // Name of the feedback collection in MongoDB
+          localField: '_id',
+          foreignField: 'nannyId',
+          as: 'feedbacks',
+        },
+      },
+      {
+        $addFields: {
+          averageRating: { 
+            $avg: '$feedbacks.rating' 
+          }, // Calculate the average rating
+          feedbackCount: { 
+            $size: '$feedbacks' 
+          }  // Count of feedbacks
+        },
+      },
+      {
+        $project: {
+          firstName: 1,
+          lastName: 1,
+          age: 1,
+          experience: 1,
+          certifications: 1,
+          profilePicture: 1,
+          contactEmail: 1,
+          contactPhone: 1,
+          address: 1,
+          averageRating: { $ifNull: ['$averageRating', 0] }, // Default to 0 if no ratings
+          feedbackCount: 1,
+        },
+      },
+    ]);
+
+    res.status(200).json({ success: true, nannies });
+  } catch (error) {
+    console.error('Error fetching nannies with ratings:', error);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
 // Function to get a single nanny by ID
 export const getNannyById = async (req, res) => {
     const { id } = req.params;

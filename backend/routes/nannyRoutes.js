@@ -6,6 +6,7 @@ import Appointment from '../models/Appointment.js';
 import Nanny from '../models/nannyModel.js';// Adjust the path based on your project structure
 import authenticate from '../middlewares/auth.js';
 import PurchasedNannies from '../models/PurchasedNannies.js';
+import { getNanniesWithRatings } from '../controllers/nannyController.js';
 import {
     addNanny,
     listNannies,
@@ -129,6 +130,10 @@ nannyRouter.post('/purchasednanny',authenticate, async (req, res) => {
     }
   });
   
-
+  
+  nannyRouter.post('/list-with-ratings', getNanniesWithRatings);
+  
+  
+  
 
 export default nannyRouter;
