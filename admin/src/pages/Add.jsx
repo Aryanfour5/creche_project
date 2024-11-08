@@ -13,6 +13,7 @@ const Add = ({ token }) => {
     const [contactEmail, setContactEmail] = useState("");
     const [contactPhone, setContactPhone] = useState("");
     const [address, setAddress] = useState("");
+    const [rate, setRate] = useState(""); // New state for rate
     const [loading, setLoading] = useState(false); // Loading state
 
     const onSubmitHandler = async (e) => {
@@ -29,6 +30,7 @@ const Add = ({ token }) => {
             formData.append("contactEmail", contactEmail);
             formData.append("contactPhone", contactPhone);
             formData.append("address", address);
+            formData.append("rate", rate); // Add rate to form data
 
             if (profilePicture) {
                 formData.append("profilePicture", profilePicture);
@@ -43,7 +45,7 @@ const Add = ({ token }) => {
             
             if (response.data.success) {
                 toast.success(response.data.message);
-                // Reset form fields here
+                // Reset form fields
                 setProfilePicture(null);
                 setFirstName("");
                 setLastName("");
@@ -53,6 +55,7 @@ const Add = ({ token }) => {
                 setContactEmail("");
                 setContactPhone("");
                 setAddress("");
+                setRate(""); // Reset rate
             } else {
                 toast.error(response.data.message);
             }
@@ -60,7 +63,6 @@ const Add = ({ token }) => {
         } catch (error) {
             console.error(error);
 
-            // Check if the error is related to token expiration
             if (error.response && error.response.status === 401) {
                 toast.error("Session expired. Please log in again.");
                 // Redirect to login or handle logout (implement this as needed)
@@ -73,7 +75,7 @@ const Add = ({ token }) => {
     };
 
     return (
-        <form onSubmit={onSubmitHandler} className='flex flex-col w-full items-start gap-3' enctype="multipart/form-data"    >
+        <form onSubmit={onSubmitHandler} className='flex flex-col w-full items-start gap-3' enctype="multipart/form-data">
             <div>
                 <p className='mb-2'>Profile Picture</p>
                 <input 
@@ -174,6 +176,18 @@ const Add = ({ token }) => {
                     value={address} 
                     className='w-full max-w-[500px] px-3 py-2' 
                     placeholder='Enter address' 
+                    required 
+                />
+            </div>
+
+            <div className='w-full'>
+                <p className='mb-2'>Rate (per month)</p>
+                <input 
+                    onChange={(e) => setRate(e.target.value)} 
+                    value={rate} 
+                    className='w-full max-w-[500px] px-3 py-2' 
+                    type="number" 
+                    placeholder='Enter rate per month' 
                     required 
                 />
             </div>

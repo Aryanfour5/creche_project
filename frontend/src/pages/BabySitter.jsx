@@ -140,77 +140,86 @@ const BabySitter = () => {
     return <div className="text-center text-xl text-gray-500">Loading...</div>;
   }
 
-  if (viewingDetails && selectedNanny) {
-    return (
-      <div className="p-5">
-        <h1 className="text-2xl font-bold mb-5">{`${selectedNanny.firstName} ${selectedNanny.lastName}`}</h1>
-        <div className="flex flex-col sm:flex-row">
+  // Add this within the "viewingDetails && selectedNanny" condition
+if (viewingDetails && selectedNanny) {
+  return (
+    <div className="p-5">
+      <h1 className="text-2xl font-bold mb-5">{`${selectedNanny.firstName} ${selectedNanny.lastName}`}</h1>
+      <div className="flex flex-col sm:flex-row">
         <img
-  className="w-full h-64 object-contain rounded-lg shadow-md"
-  src={selectedNanny.profilePicture || 'https://via.placeholder.com/150'}
-  alt={`${selectedNanny.firstName} ${selectedNanny.lastName}`}
-/>
-
-
-          <div className="sm:ml-5 mt-5 sm:mt-0">
-            <p><strong>Experience:</strong> {selectedNanny.experience || 'No experience available.'}</p>
-            <p><strong>Email:</strong> {selectedNanny.contactEmail}</p>
-            <p><strong>Phone:</strong> {selectedNanny.contactPhone || 'No phone available.'}</p>
-            <p><strong>Address:</strong> {selectedNanny.address || 'No address available.'}</p>
-            <p><strong>Rate:</strong> ${selectedNanny.rate} / hour</p>
-            <div className="flex items-center mt-4">
-              {[...Array(5)].map((_, index) => (
-                <span
-                  key={index}
-                  className={`text-xl ${index < (selectedNanny.averageRating || 0) ? 'text-yellow-500' : 'text-gray-300'}`}
-                >
-                  ★
-                </span>
-              ))}
-              <span className="ml-2">({(selectedNanny.averageRating || 0).toFixed(1)})</span>
-            </div>
-          </div>
-        </div>
-
-        {/* Leave Feedback Section */}
-        <div className="mt-5">
-          <div className="flex justify-center items-center">
+          className="w-full h-64 object-contain rounded-lg shadow-md"
+          src={selectedNanny.profilePicture || 'https://via.placeholder.com/150'}
+          alt={`${selectedNanny.firstName} ${selectedNanny.lastName}`}
+        />
+        <div className="sm:ml-5 mt-5 sm:mt-0">
+          <p><strong>Experience:</strong> {selectedNanny.experience || 'No experience available.'}</p>
+          <p><strong>Email:</strong> {selectedNanny.contactEmail}</p>
+          <p><strong>Phone:</strong> {selectedNanny.contactPhone || 'No phone available.'}</p>
+          <p><strong>Address:</strong> {selectedNanny.address || 'No address available.'}</p>
+          <p><strong>Rate:</strong> ${selectedNanny.rate} / hour</p>
+          <div className="flex items-center mt-4">
             {[...Array(5)].map((_, index) => (
               <span
                 key={index}
-                className={`text-xl cursor-pointer ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
-                onClick={() => setRating(index + 1)}
+                className={`text-xl ${index < (selectedNanny.averageRating || 0) ? 'text-yellow-500' : 'text-gray-300'}`}
               >
                 ★
               </span>
             ))}
+            <span className="ml-2">({(selectedNanny.averageRating || 0).toFixed(1)})</span>
           </div>
+        </div>
+      </div>
 
-          <textarea
-            className="w-full p-2 border border-gray-300 rounded-md mt-2"
-            placeholder="Leave your feedback here"
-            value={feedback}
-            onChange={(e) => setFeedback(e.target.value)}
-          />
-
-          <button
-            onClick={handleSubmitFeedback}
-            className="w-full mt-2 bg-green-600 text-white py-2 rounded-md"
-            disabled={!feedback || !rating}
-          >
-            Submit Feedback
-          </button>
+      {/* Leave Feedback Section */}
+      <div className="mt-5">
+        <div className="flex justify-center items-center">
+          {[...Array(5)].map((_, index) => (
+            <span
+              key={index}
+              className={`text-xl cursor-pointer ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
+              onClick={() => setRating(index + 1)}
+            >
+              ★
+            </span>
+          ))}
         </div>
 
+        <textarea
+          className="w-full p-2 border border-gray-300 rounded-md mt-2"
+          placeholder="Leave your feedback here"
+          value={feedback}
+          onChange={(e) => setFeedback(e.target.value)}
+        />
+
+        <button
+          onClick={handleSubmitFeedback}
+          className="w-full mt-2 bg-green-600 text-white py-2 rounded-md"
+          disabled={!feedback || !rating}
+        >
+          Submit Feedback
+        </button>
+      </div>
+
+      <div className="flex mt-5">
+        <button
+          onClick={handleAddToCart.bind(null, selectedNanny)}
+          className="flex-1 mr-2 bg-blue-500 text-white py-2 rounded-md"
+        >
+          Add to Cart
+        </button>
+        
         <button
           onClick={handleCloseDetails}
-          className="mt-5 bg-red-500 text-white py-2 rounded-md"
+          className="flex-1 bg-red-500 text-white py-2 rounded-md"
         >
           Close Details
         </button>
       </div>
-    );
-  }
+    </div>
+  );
+}
+
 
   return (
     <div className="p-5 font-sans">

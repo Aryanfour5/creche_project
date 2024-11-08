@@ -449,6 +449,24 @@ app.post("/order/validate", async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error while fetching nanny ratings.' });
   }
 });
+app.get('/nanny/:id/average-rating', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const nanny = await Nanny.findById(id);
+
+    if (!nanny) {
+      return res.status(404).json({ message: 'Nanny not found' });
+    }
+
+    // Use the virtual `averageRating` field
+    res.json({ averageRating: nanny.averageRating });
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
+});
+function getRandomRating(min = 3, max = 4.9) {
+  return parseFloat((Math.random() * (max - min) + min).toFixed(1));
+}
 
 // Start server
 app.listen(PORT, () => {

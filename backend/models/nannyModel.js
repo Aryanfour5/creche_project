@@ -1,46 +1,24 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-// Define the Nanny schema
-const NannySchema = new mongoose.Schema(
-  {
-    firstName: {
-      type: String,
-      required: true,
-    },
-    lastName: {
-      type: String,
-      required: true,
-    },
-    age: {
-      type: Number,
-      required: true,
-    },
-    experience: {
-      type: String,
-      required: true,
-    },
-    certifications: {
-      type: [String], // Array of strings to store multiple certifications
-    },
-    profilePicture: {
-      type: String, // URL or path to the nanny's profile picture
-    },
-    contactEmail: {
-      type: String,
-      required: true,
-    },
-    contactPhone: {
-      type: String,
-      required: true,
-    },
-    address: {
-      type: String, // Address of the nanny (optional)
-    },
-  },
-  { timestamps: true } // Automatically adds createdAt and updatedAt fields
-);
+const nannySchema = new mongoose.Schema({
+  firstName: String,
+  lastName: String,
+  contactEmail: String,
+  contactPhone: String,
+  address: String,
+  rate: Number,  // Hourly rate for nanny
+  profilePicture: String,
+  experience: String,
+  ratings: { type: [Number], default: [] },  // Default to an empty array for ratings
+}, { timestamps: true });
 
-// Create and export the Nanny model
-const Nanny =mongoose.models.Nanny ||  mongoose.model("Nanny", NannySchema);
+// Virtual field to calculate the average rating
+nannySchema.virtual('averageRating').get(function () {
+  if (this.ratings.length === 0) return 0;
+  const total = this.ratings.reduce((sum, rating) => sum + rating, 0);
+  return total / this.ratings.length;
+});
+
+const Nanny = mongoose.model('Nanny', nannySchema);
+
 export default Nanny;
-
