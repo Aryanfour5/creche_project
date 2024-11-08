@@ -3,7 +3,7 @@ import axios from 'axios';
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [purchasedNannyIds, setPurchasedNannyIds] = useState([]); // Store purchased nanny IDs
+  const [purchasedNannyIds, setPurchasedNannyIds] = useState([]); // Store purchased nanny IDsss
 
   useEffect(() => {
     const fetchCartItems = async () => {
