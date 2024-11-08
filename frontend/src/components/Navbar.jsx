@@ -21,24 +21,51 @@ const Navbar = () => {
 
   return (
     <div className='flex items-center justify-between py-5 font-medium'>
-      <Link to='/' className='font-bold text-xl'>Caring Nanny</Link>
+      {/* Logo and Caring Nanny Title */}
+      <div className="flex items-center gap-2">
+        <img src='/logo2.webp' alt="Caring Nanny Logo" className="w-12 h-auto" /> {/* Add logo image */}
+        <Link to='/' className='font-bold text-xl text-blue-600'>
+          Caring Nanny
+        </Link>
+      </div>
 
+      {/* Navigation Links */}
       <ul className='hidden sm:flex gap-5 text-sm text-gray-700'>
-        <NavLink to='/' className='flex flex-col items-center gap-1'>
-          <p>HOME</p>
+        <NavLink
+          to='/'
+          className={({ isActive }) =>
+            `flex flex-col items-center gap-1 ${isActive ? 'border-b-2 border-blue-500' : ''}`
+          }
+        >
+          HOME
         </NavLink>
-        <NavLink to='/babysitter' className='flex flex-col items-center gap-1'>
-          <p>BABYSITTER</p>
+        <NavLink
+          to='/babysitter'
+          className={({ isActive }) =>
+            `flex flex-col items-center gap-1 ${isActive ? 'border-b-2 border-blue-500' : ''}`
+          }
+        >
+          BABYSITTER
         </NavLink>
-        <NavLink to='/about' className='flex flex-col items-center gap-1'>
-          <p>ABOUT</p>
+        <NavLink
+          to='/about'
+          className={({ isActive }) =>
+            `flex flex-col items-center gap-1 ${isActive ? 'border-b-2 border-blue-500' : ''}`
+          }
+        >
+          ABOUT
         </NavLink>
-        <NavLink to='/contact' className='flex flex-col items-center gap-1'>
-          <p>CONTACT</p>
+        <NavLink
+          to='/contact'
+          className={({ isActive }) =>
+            `flex flex-col items-center gap-1 ${isActive ? 'border-b-2 border-blue-500' : ''}`
+          }
+        >
+          CONTACT
         </NavLink>
-        {/* Chatbot Button */}
       </ul>
 
+      {/* Profile, Cart, and Chatbot Icons */}
       <div className='flex items-center gap-6'>
         <div className='relative'>
           <img
@@ -62,7 +89,6 @@ const Navbar = () => {
           <img src={cartIcon} className='w-5 min-w-5' alt="Cart" />
         </Link>
 
-        {/* Chatbot Button on the right */}
         <NavLink to='/chatbot' className='flex items-center gap-2 py-2 px-4 border rounded-lg bg-blue-500 text-white'>
           <p className='text-sm'>CHATBOT</p>
         </NavLink>
@@ -70,6 +96,7 @@ const Navbar = () => {
         <img onClick={() => setVisible(true)} src={menuIcon} className='w-5 cursor-pointer sm:hidden' alt="Menu" />
       </div>
 
+      {/* Mobile Menu */}
       <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full' : 'w-0'}`}>
         <div className='flex flex-col text-gray-600'>
           <div onClick={() => setVisible(false)} className='flex items-center gap-4 p-3 cursor-pointer'>
