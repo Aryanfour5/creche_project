@@ -7,9 +7,9 @@ const BabySitter = () => {
   const [nannies, setNannies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [cart, setCart] = useState([]);
-  const [feedback, setFeedback] = useState(""); // State to manage feedback input
-  const [selectedNanny, setSelectedNanny] = useState(null); // For storing the selected nanny for feedback
-
+  const [feedback, setFeedback] = useState("");
+  const [selectedNanny, setSelectedNanny] = useState(null); // Store the selected nanny for detailed view
+  const [viewingDetails, setViewingDetails] = useState(false); // Flag to show nanny details modal
   const topRef = useRef(null); // Ref to scroll to the top
 
   useEffect(() => {
@@ -85,10 +85,9 @@ const BabySitter = () => {
       const decoded = jwtDecode(token);
       const userId = decoded.id;
 
-      // Send feedback as 'comment' to match the backend schema
       const response = await axios.post(
         'http://localhost:5000/feedback',
-        { nannyId: selectedNanny._id, userId, feedback, rating }, // Use 'comment' here
+        { nannyId: selectedNanny._id, userId, feedback, rating },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -112,21 +111,105 @@ const BabySitter = () => {
 
   const handleLeaveFeedback = (nanny) => {
     if (selectedNanny && selectedNanny._id === nanny._id) {
-      // If this nanny is already selected, toggle off (deselect)
-      setSelectedNanny(null);
+      setSelectedNanny(null); // Close the feedback form if the same nanny is clicked
     } else {
-      // Otherwise, select this nanny
-      setSelectedNanny(nanny);
+      setSelectedNanny(nanny); // Open the feedback form for the selected nanny
     }
 
-    // Scroll to the top when leaving feedback
+    if (topRef.current) {
+      topRef.current.scrollIntoView({ behavior: 'smooth' }); // Scroll to the top when leaving feedback
+    }
+
+    // Ensure viewingDetails is set to false when leaving feedback since it's a different mode
+    setViewingDetails(false);
+  };
+
+  const handleViewDetails = (nanny) => {
+    setSelectedNanny(nanny);
+    setViewingDetails(true); // Show details view
     if (topRef.current) {
       topRef.current.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
+  const handleCloseDetails = () => {
+    setViewingDetails(false); // Close the details view
+  };
+
   if (loading) {
     return <div className="text-center text-xl text-gray-500">Loading...</div>;
+  }
+
+  if (viewingDetails && selectedNanny) {
+    return (
+      <div className="p-5">
+        <h1 className="text-2xl font-bold mb-5">{`${selectedNanny.firstName} ${selectedNanny.lastName}`}</h1>
+        <div className="flex flex-col sm:flex-row">
+        <img
+  className="w-full h-64 object-contain rounded-lg shadow-md"
+  src={selectedNanny.profilePicture || 'https://via.placeholder.com/150'}
+  alt={`${selectedNanny.firstName} ${selectedNanny.lastName}`}
+/>
+
+
+          <div className="sm:ml-5 mt-5 sm:mt-0">
+            <p><strong>Experience:</strong> {selectedNanny.experience || 'No experience available.'}</p>
+            <p><strong>Email:</strong> {selectedNanny.contactEmail}</p>
+            <p><strong>Phone:</strong> {selectedNanny.contactPhone || 'No phone available.'}</p>
+            <p><strong>Address:</strong> {selectedNanny.address || 'No address available.'}</p>
+            <p><strong>Rate:</strong> ${selectedNanny.rate} / hour</p>
+            <div className="flex items-center mt-4">
+              {[...Array(5)].map((_, index) => (
+                <span
+                  key={index}
+                  className={`text-xl ${index < (selectedNanny.averageRating || 0) ? 'text-yellow-500' : 'text-gray-300'}`}
+                >
+                  ★
+                </span>
+              ))}
+              <span className="ml-2">({(selectedNanny.averageRating || 0).toFixed(1)})</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Leave Feedback Section */}
+        <div className="mt-5">
+          <div className="flex justify-center items-center">
+            {[...Array(5)].map((_, index) => (
+              <span
+                key={index}
+                className={`text-xl cursor-pointer ${index < rating ? 'text-yellow-500' : 'text-gray-300'}`}
+                onClick={() => setRating(index + 1)}
+              >
+                ★
+              </span>
+            ))}
+          </div>
+
+          <textarea
+            className="w-full p-2 border border-gray-300 rounded-md mt-2"
+            placeholder="Leave your feedback here"
+            value={feedback}
+            onChange={(e) => setFeedback(e.target.value)}
+          />
+
+          <button
+            onClick={handleSubmitFeedback}
+            className="w-full mt-2 bg-green-600 text-white py-2 rounded-md"
+            disabled={!feedback || !rating}
+          >
+            Submit Feedback
+          </button>
+        </div>
+
+        <button
+          onClick={handleCloseDetails}
+          className="mt-5 bg-red-500 text-white py-2 rounded-md"
+        >
+          Close Details
+        </button>
+      </div>
+    );
   }
 
   return (
@@ -141,6 +224,7 @@ const BabySitter = () => {
             <div
               key={nanny._id}
               className="border rounded-lg overflow-hidden shadow-md bg-white transition-transform transform hover:scale-105"
+              onClick={() => handleViewDetails(nanny)} // Add onClick to open details on card click
             >
               <img
                 className="w-full h-40 object-cover"
@@ -152,9 +236,7 @@ const BabySitter = () => {
                 <p className="text-gray-600">{nanny.experience || 'No experience description available.'}</p>
                 <p className="text-gray-600">Contact: {nanny.contactEmail}</p>
                 <p className="text-gray-600">Rate: ${nanny.rate} / hour</p>
-
-                {/* Display Average Rating (Stars) */}
-                <div className="flex items-center">
+                <div className="flex items-center mt-2">
                   {[...Array(5)].map((_, index) => (
                     <span
                       key={index}
@@ -169,7 +251,7 @@ const BabySitter = () => {
                 {/* Add feedback form when a nanny is selected */}
                 <div className="mt-4">
                   <button
-                    className="w-full bg-blue-600 text-white py-2 rounded-b-lg hover:bg-green-600"
+                    className="w-full bg-black text-white py-2 rounded-b-lg hover:bg-green-600"
                     onClick={() => handleLeaveFeedback(nanny)}
                   >
                     {selectedNanny && selectedNanny._id === nanny._id ? 'Close Feedback' : 'Leave Feedback'}
@@ -209,13 +291,6 @@ const BabySitter = () => {
                   )}
                 </div>
               </div>
-
-              <button
-                className="w-full bg-blue-500 text-white py-2 rounded-b-lg hover:bg-green-600"
-                onClick={() => handleAddToCart(nanny)}
-              >
-                Add to Cart
-              </button>
             </div>
           ))
         )}
