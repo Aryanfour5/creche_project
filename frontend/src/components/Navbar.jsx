@@ -23,7 +23,7 @@ const Navbar = () => {
     <div className='flex items-center justify-between py-5 font-medium'>
       {/* Logo and Caring Nanny Title */}
       <div className="flex items-center gap-2">
-        <img src='/logo2.webp' alt="Caring Nanny Logo" className="w-12 h-auto" /> {/* Add logo image */}
+        <img src='/logo3.jpg' alt="Caring Nanny Logo" className="w-12 h-auto" /> {/* Add logo image */}
         <Link to='/' className='font-bold text-xl text-blue-600'>
           Caring Nanny
         </Link>

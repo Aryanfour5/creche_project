@@ -169,7 +169,7 @@ const BabySitter = () => {
                 {/* Add feedback form when a nanny is selected */}
                 <div className="mt-4">
                   <button
-                    className="w-full bg-black text-white py-2 rounded-b-lg hover:bg-green-600"
+                    className="w-full bg-blue-600 text-white py-2 rounded-b-lg hover:bg-green-600"
                     onClick={() => handleLeaveFeedback(nanny)}
                   >
                     {selectedNanny && selectedNanny._id === nanny._id ? 'Close Feedback' : 'Leave Feedback'}
