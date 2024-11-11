@@ -33,7 +33,7 @@ const Footer = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/services" className="hover:text-indigo-500 transition duration-300">
+              <NavLink to="/our-services" className="hover:text-indigo-500 transition duration-300">
                 Our Services
               </NavLink>
             </li>
@@ -63,14 +63,14 @@ const Footer = () => {
               <FaPhone className="text-indigo-700" /> 
               <div>
                 <p className="font-semibold">Call Us</p>
-                <p>+91 98765 43210</p>
+                <p>+91 9991268863</p>
               </div>
             </li>
             <li className="flex items-center gap-3">
               <FaEnvelope className="text-indigo-700" /> 
               <div>
                 <p className="font-semibold">Email Us</p>
-                <p>info@medisync.in</p>
+                <p></p>carringnannies@connect.com
               </div>
             </li>
             <li className="flex items-center gap-3">

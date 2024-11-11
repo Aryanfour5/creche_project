@@ -17,6 +17,7 @@ import ChatBot from './pages/ChatBot';
 import Feedback from './pages/FeedbackForm';
 import PrivacyPolicy from './pages/PrivacyPolicy'; 
 import TermsAndConditions from './pages/TermsAndConditions';
+import OurServices from './pages/OurServices';
 
 const App = () => {
   return (
@@ -30,6 +31,7 @@ const App = () => {
         <Route path='/babysitter/:id' element={<Product />} />
         <Route path='/cart' element={<Cart />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/our-services' element={<OurServices />} /> {/* Route for Our Services */}
         <Route path='/signup' element={<SignUp />} />
         <Route path='/profile' element={<MyProfile />} />
         <Route path='/purchased' element={<PurchasedNannies />} />
