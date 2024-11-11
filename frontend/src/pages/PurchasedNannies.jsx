@@ -15,7 +15,7 @@ const PurchasedNannies = () => {
         // Fetch purchased nannies data from backend
         const fetchPurchasedNannies = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/nanny/user/purchased-nannies', {
+                const response = await axios.get('https://creche-project-k3km.vercel.app/api/nanny/user/purchased-nannies', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
@@ -44,7 +44,7 @@ const handleBookAppointment = async (nannyId) => {
 console.log("time is"+formattedTime);
     try {
         const response = await axios.post(
-            `http://localhost:5000/api/nanny/book-appointment/${nannyId}`,
+            `https://creche-project-k3km.vercel.app/api/nanny/book-appointment/${nannyId}`,
             { 
                 userLocation, 
                 appointmentDate: formattedDate, 

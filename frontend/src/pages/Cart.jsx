@@ -15,7 +15,7 @@ const Cart = () => {
           return;
         }
 
-        const response = await axios.get('http://localhost:5000/api/cart', {
+        const response = await axios.get('https://creche-project-k3km.vercel.app/api/cart', {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -39,7 +39,7 @@ const Cart = () => {
   
   const deleteCartItem = async (id) => {
     try {
-      const response = await axios.delete(`http://localhost:5000/api/cart/${id}`, {
+      const response = await axios.delete(`https://creche-project-k3km.vercel.app/api/cart/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`,
         },
@@ -77,7 +77,7 @@ const Cart = () => {
 
         // Save all cart items in the PurchasedNanny collection in one request
         const saveNanniesResponse = await axios.post(
-            "http://localhost:5000/api/nanny/purchasednanny",
+            "https://creche-project-k3km.vercel.app/api/nanny/purchasednanny",
             { nannyIds },
             { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -90,7 +90,7 @@ const Cart = () => {
   
         // Create order in the backend
         const orderResponse = await axios.post(
-            "http://localhost:5000/order",
+            "https://creche-project-k3km.vercel.app/order",
             { amount, currency, receipt: receiptId },
             { headers: { Authorization: `Bearer ${token}` } }
         );
@@ -120,7 +120,7 @@ const Cart = () => {
 
                 // Validate payment
                 const validateRes = await axios.post(
-                    "http://localhost:5000/order/validate",
+                    "https://creche-project-k3km.vercel.app/order/validate",
                     paymentDetails,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );

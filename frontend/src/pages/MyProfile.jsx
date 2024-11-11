@@ -14,7 +14,7 @@ const MyProfile = () => {
   const fetchProfileData = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/user/profile', {
+      const response = await axios.get('https://creche-project-k3km.vercel.app/api/user/profile', {
         headers: { Authorization: `Bearer ${token}` },
       });
       const { username, email, phoneNumber, aadharCard } = response.data;
@@ -39,7 +39,7 @@ const handleUpdateProfile = async (e) => {
     const token = localStorage.getItem('token');
     console.log(token);
     await axios.put(
-      'http://localhost:5000/api/user/profile',
+      'https://creche-project-k3km.vercel.app/api/user/profile',
       {
         username,
         email,
