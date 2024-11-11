@@ -1,4 +1,4 @@
-import cloudinary from 'cloudinary'; // Import the entire Cloudinary module
+import cloudinary from 'cloudinary'; 
 const { v2: cloudinaryV2 } = cloudinary; 
 
 const connectCloudinary = async () => {

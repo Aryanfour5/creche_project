@@ -44,7 +44,9 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.get('/', (req, res) => {
+  res.send("API working");
+});
 // Define Order Schema
 const OrderSchema = new mongoose.Schema({
   razorpay_order_id: String,
@@ -77,9 +79,7 @@ const PurchasedNannySchema = new mongoose.Schema({
 });
 // API endpoints
 export default mongoose.model("PurchasedNanny", PurchasedNannySchema);
-app.get('/', (req, res) => {
-  res.send("API working");
-});
+
 app.use('/backend/admin/public', express.static(path.join(__dirname, 'public')));
 
 const storage = multer.diskStorage({
