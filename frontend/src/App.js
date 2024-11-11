@@ -7,16 +7,15 @@ import Contact from './pages/Contact';
 import Product from './pages/Product';
 import Cart from './pages/Cart';
 import Login from './pages/Login';
-import SignUp from './pages/SignUp'; // Import SignUp component
+import SignUp from './pages/SignUp'; 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
-import OurPolicy from './components/OurPolicy';
-import MyProfile from './pages/MyProfile';  // Import MyProfile component
+import MyProfile from './pages/MyProfile'; 
 import BabySitter from './pages/BabySitter';
 import PurchasedNannies from './pages/PurchasedNannies';
 import ChatBot from './pages/ChatBot';
 import Feedback from './pages/FeedbackForm';
-import PrivacyPolicy from './pages/PrivacyPolicy'; // Import PrivacyPolicy component
+import PrivacyPolicy from './pages/PrivacyPolicy'; 
 import TermsAndConditions from './pages/TermsAndConditions';
 
 const App = () => {
