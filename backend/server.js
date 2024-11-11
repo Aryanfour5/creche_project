@@ -239,7 +239,9 @@ app.post('/api/nanny/book-appointment/:nannyId', authenticate, async (req, res) 
     res.status(500).json({ message: 'Error booking appointment. Please try again later.' });
   }
 });
-
+app.get('/test',async(req,res)=>{
+res.send("working");
+});
 
 
 
