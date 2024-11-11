@@ -36,6 +36,7 @@ const __dirname = path.dirname(__filename);
 
 app.use(cors({
   origin: ['*',
+    'https://creche-project-alpha.vercel.app/',
     'http://localhost:3000', // Existing frontend
     'http://localhost:5174'  // New frontend
   ],

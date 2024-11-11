@@ -1,18 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
-import "react-datepicker/dist/react-datepicker.css"; // For styling
+import "react-datepicker/dist/react-datepicker.css";
 import { format } from 'date-fns';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const PurchasedNannies = () => {
     const [purchasedNannies, setPurchasedNannies] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selectedDate, setSelectedDate] = useState(null); // State to store selected date and time
-    const [userLocation, setUserLocation] = useState("123 Main St, Anytown"); // User location
-    const [showCalendar, setShowCalendar] = useState(false); // To control visibility of calendar
+    const [selectedDate, setSelectedDate] = useState(null);
+    const [userLocation, setUserLocation] = useState("123 Main St, Anytown");
+    const [showCalendar, setShowCalendar] = useState({});
 
-    
     useEffect(() => {
-        // Fetch purchased nannies data from backend
         const fetchPurchasedNannies = async () => {
             try {
                 const response = await axios.get('https://creche-project-k3km.vercel.app/api/nanny/user/purchased-nannies', {
@@ -32,38 +33,38 @@ const PurchasedNannies = () => {
         fetchPurchasedNannies();
     }, []);
 
-const handleBookAppointment = async (nannyId) => {
-    if (!selectedDate) {
-        alert("Please select a date and time.");
-        return;
-    }
+    const handleBookAppointment = async (nannyId) => {
+        if (!selectedDate) {
+            toast.warn("Please select a date and time.", { position: toast.POSITION.TOP_CENTER });
+            return;
+        }
 
-    // Format date and time
-    const formattedDate = format(selectedDate, 'yyyy-MM-dd');
-    const formattedTime = format(selectedDate, 'HH:mm');
-console.log("time is"+formattedTime);
-    try {
-        const response = await axios.post(
-            `https://creche-project-k3km.vercel.app/api/nanny/book-appointment/${nannyId}`,
-            { 
-                userLocation, 
-                appointmentDate: formattedDate, 
-                meetingTime: formattedTime 
-            }, 
-            {
-                headers: {
-                    Authorization: `Bearer ${localStorage.getItem('token')}`
+        const formattedDate = format(selectedDate, 'yyyy-MM-dd');
+        const formattedTime = format(selectedDate, 'HH:mm');
+
+        try {
+            const response = await axios.post(
+                `https://creche-project-k3km.vercel.app/api/nanny/book-appointment/${nannyId}`,
+                { 
+                    userLocation, 
+                    appointmentDate: formattedDate, 
+                    meetingTime: formattedTime 
+                }, 
+                {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
                 }
-            }
-        );
-        console.log('Appointment booked successfully:', response.data);
-        alert('Appointment booked successfully!');
-    } catch (error) {
-        console.error('Error booking appointment:', error);
-        alert('Error booking appointment. Please try again.');
-    }
-};
-
+            );
+            console.log('Appointment booked successfully:', response.data);
+            toast.success('Appointment booked successfully!', { position: toast.POSITION.TOP_CENTER });
+            setShowCalendar((prev) => ({ ...prev, [nannyId]: false }));
+        } catch (error) {
+            console.error('Error booking appointment:', error);
+            const errorMessage = error.response?.data?.message || 'Error booking appointment. Please try again.';
+            toast.error(errorMessage, { position: toast.POSITION.TOP_CENTER });
+        }
+    };
 
     if (loading) return <div className="text-center py-5">Loading...</div>;
 
@@ -73,22 +74,27 @@ console.log("time is"+formattedTime);
             {purchasedNannies.length > 0 ? (
                 <ul className="space-y-4">
                     {purchasedNannies.map((nanny) => (
-                        <li key={nanny.nannyId} className="flex justify-between items-center p-4 border rounded-lg shadow-md bg-gray-100 hover:bg-gray-200 transition duration-200">
-                            <div>
-                                <p className="text-lg font-semibold text-gray-800">{nanny.nannyName}</p>
-                                <p className="text-gray-600">Purchase Date: {new Date(nanny.purchaseDate).toLocaleDateString()}</p>
+                        <li key={nanny.nannyId} className="flex flex-col space-y-2 p-4 border rounded-lg shadow-md bg-gray-100 hover:bg-gray-200 transition duration-200">
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <p className="text-lg font-semibold text-gray-800">{nanny.nannyName}</p>
+                                    <p className="text-gray-600">Purchase Date: {new Date(nanny.purchaseDate).toLocaleDateString()}</p>
+                                </div>
+                                <button 
+                                    onClick={() => {
+                                        setShowCalendar(prev => ({ ...prev, [nanny.nannyId]: !prev[nanny.nannyId] }));
+                                        setSelectedDate(null); 
+                                    }} 
+                                    className="bg-blue-600 text-white py-2 px-4 rounded-lg transition duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                >
+                                    Book Appointment
+                                </button>
                             </div>
-                            <button 
-                                onClick={() => setShowCalendar(!showCalendar)} // Toggle calendar visibility
-                                className="bg-blue-600 text-white py-2 px-4 rounded-lg transition duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
-                            >
-                                Book Appointment
-                            </button>
-                            {showCalendar && (
-                                <div className="mt-4">
+                            {showCalendar[nanny.nannyId] && (
+                                <div className="mt-2">
                                     <DatePicker
                                         selected={selectedDate}
-                                        onChange={date => setSelectedDate(date)} // Update selected date
+                                        onChange={date => setSelectedDate(date)}
                                         showTimeSelect
                                         timeFormat="HH:mm"
                                         timeIntervals={15}

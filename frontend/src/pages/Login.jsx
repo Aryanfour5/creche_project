@@ -16,11 +16,10 @@ const Login = () => {
         email,
         password,
       });
-
-      // Assuming the backend returns a token
+      console.log('Response:', response.data);
+     
       localStorage.setItem('token', response.data.token); // Store token in local storage
-
-      // Redirect to home or another page
+console.log(response.data.token);
       navigate('/'); // Use useNavigate to redirect
     } catch (err) {
       toast.error('Invalid email or password');
