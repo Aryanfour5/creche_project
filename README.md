@@ -1,4 +1,3 @@
-Caring Nanny
 Welcome to Caring Nanny – a web application designed to connect parents with trusted nannies, simplifying the process of finding and booking childcare services. The platform provides an easy-to-use interface for both parents and nannies, with features such as profile management, nanny booking, and appointment scheduling.
 
 Note: Refer to each directory’s README file for detailed documentation, configuration, and installation guides.
