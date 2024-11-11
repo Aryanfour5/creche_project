@@ -47,6 +47,9 @@ app.use(express.json());
 app.get('/', (req, res) => {
   res.send("API working");
 });
+app.get('/favicon.ico', (req, res) => {
+  res.status(204).end();  // Send a 204 No Content response to ignore the favicon request
+});
 // Define Order Schema
 const OrderSchema = new mongoose.Schema({
   razorpay_order_id: String,
