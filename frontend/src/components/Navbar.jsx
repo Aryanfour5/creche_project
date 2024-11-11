@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import profileIcon from '../assets/frontend_assets/profile_icon.png';
 import cartIcon from '../assets/frontend_assets/cart_icon.png';
 import menuIcon from '../assets/frontend_assets/menu_icon.png';
@@ -8,6 +8,7 @@ import { Link, NavLink, useNavigate } from 'react-router-dom';
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const dropdownRef = useRef(null);  // Ref for the dropdown
   const navigate = useNavigate();
 
   const handleDropdownToggle = () => {
@@ -23,11 +24,25 @@ const Navbar = () => {
     setVisible(false);
   };
 
+  // Close dropdown when clicking outside of it
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setDropdownVisible(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className='flex items-center justify-between py-5 font-medium'>
       {/* Logo and Caring Nanny Title */}
       <div className="flex items-center gap-2">
-        <img src='/logo2.webp' alt="Caring Nanny Logo" className="w-12 h-auto" /> {/* Add logo image */}
+        <img src='/logo2.webp' alt="Caring Nanny Logo" className="w-12 h-auto" />
         <Link to='/' className='font-bold text-xl text-blue-600'>
           Caring Nanny
         </Link>
@@ -79,7 +94,10 @@ const Navbar = () => {
             alt="Profile"
           />
           {dropdownVisible && (
-            <div className='absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-10'>
+            <div
+              ref={dropdownRef} // Attach the ref to the dropdown
+              className='absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg z-10'
+            >
               <Link to='/signup' className='block px-4 py-2 text-gray-800 hover:bg-gray-200'>Sign Up</Link>
               <Link to='/login' className='block px-4 py-2 text-gray-800 hover:bg-gray-200'>Login</Link>
               <Link to='/profile' className='block px-4 py-2 text-gray-800 hover:bg-gray-200'>My Profile</Link>
@@ -124,3 +142,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
