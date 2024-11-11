@@ -79,9 +79,15 @@ const PurchasedNannySchema = new mongoose.Schema({
 });
 // API endpoints
 export default mongoose.model("PurchasedNanny", PurchasedNannySchema);
-
+app.use(express.json());
 app.use('/backend/admin/public', express.static(path.join(__dirname, 'public')));
-
+app.use((req, res, next) => {
+  if (req.url === '/favicon.ico') {
+    res.status(204).end(); // No Content status to end request without response
+  } else {
+    next();
+  }
+});
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
       // Save files to the 'public/uploads' directory
@@ -131,7 +137,7 @@ const GOOGLE_GENAI_API_KEY = 'AIzaSyDfOdD4zaN63PnYRKtLZxPWEL3YQYaBop4'; // Repla
 const GOOGLE_GENAI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
 
 // Middleware to parse JSON request bodies
-app.use(express.json());
+
 
 
 app.post('/api/generate-content', async (req, res) => {
