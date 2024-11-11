@@ -44,6 +44,12 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use((req, res, next) => {
+  req.setTimeout(500000); // Set timeout to 500,000 ms (500 seconds or 8.3 minutes)
+  res.setTimeout(500000); // Set timeout for response
+  next();
+});
+
 app.get('/', (req, res) => {
   res.send("API working");
 });
