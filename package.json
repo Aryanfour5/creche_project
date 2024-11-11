@@ -1,4 +1,7 @@
-{
+{ "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": " cd backend && npm start"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "jwt-decode": "^4.0.0",
