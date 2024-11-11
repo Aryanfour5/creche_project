@@ -1,7 +1,10 @@
 import Nanny from '../models/nannyModel.js'; // Adjust the path to your Nanny model
 import cloudinary from 'cloudinary'; // Import the entire Cloudinary module
 const { v2: cloudinaryV2 } = cloudinary; // Destructure to get the v2 object
-
+const getRandomRating = () => {
+    return (Math.random() * (5 - 1) + 1).toFixed(1); // Generates a number between 1 and 5 with one decimal
+  };
+  
 // Configure Cloudinary
 cloudinaryV2.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME, // Set your Cloudinary cloud name
@@ -18,7 +21,8 @@ export const addNanny = async (req, res) => {
         certifications,
         contactEmail,
         contactPhone,
-        address
+        address,
+        rate
     } = req.body;
 
     try {
@@ -80,6 +84,8 @@ export const addNanny = async (req, res) => {
             contactEmail,
             contactPhone,
             address,
+            rate,
+            ratings:getRandomRating(),
         });
 
         // Save the new nanny to the database
