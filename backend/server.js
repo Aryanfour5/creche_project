@@ -92,6 +92,13 @@ const storage = multer.diskStorage({
       cb(null, file.originalname);
   },
 });
+app.use((req, res, next) => {
+  if (req.url === '/favicon.ico') {
+    res.status(204).end(); // No Content status to end request without response
+  } else {
+    next();
+  }
+});
 const adminEmail = 'aryanbachute063@gmail.com'; // Admin's email
 
 // Mail setup (using Nodemailer)
