@@ -13,16 +13,14 @@ import { fileURLToPath } from 'url';
 import Nanny from './models/nannyModel.js';
 import User from './models/userModel.js';
 import nodemailer from 'nodemailer';
-import { format } from 'date-fns';
 //import PurchasedNanny from '../frontend/src/pages/PurchasedNannies.jsx';// Import cart routes
 import axios from 'axios';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import Razorpay from 'razorpay';
 import crypto from 'crypto';
-import cloudinary from './config/cloudinary.js'; // Cloudinary config
+; // Cloudinary config
 import imageRouter from './routes/imageRoutes.js'; // Your new image routes
-import { getPurchasesWithUserAndNanny } from './controllers/adminController.js';
 import Feedback from './models/Feedback.js';
 //import purchasedNanniesRoute from "./routes/PurchasedNanniesRoutes.js";
 // Load environment variables
@@ -412,7 +410,8 @@ app.post('/feedback', authenticate, async (req, res) => {
       message: 'An error occurred while submitting feedback.',
     });
   }
-});app.get('/ratings', async (req, res) => {
+});
+app.get('/ratings', async (req, res) => {
   try {
     console.log('Request to /ratings received');
 
