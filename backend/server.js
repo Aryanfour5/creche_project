@@ -63,7 +63,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use('/backend/admin/public', express.static(path.join(__dirname, 'public')));
 
-/*const storage = multer.diskStorage({
+const storage = multer.diskStorage({
   destination: (req, file, cb) => {
       // Save files to the 'public/uploads' directory
       cb(null, uploadDir);
@@ -72,7 +72,7 @@ app.use('/backend/admin/public', express.static(path.join(__dirname, 'public')))
       // Set the filename as the original name
       cb(null, file.originalname);
   },
-});*/
+});
 
 
 app.get('/test',async(req,res)=>{
