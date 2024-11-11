@@ -19,6 +19,10 @@ const Navbar = () => {
     localStorage.removeItem('token');
   };
 
+  const closeMenu = () => {
+    setVisible(false);
+  };
+
   return (
     <div className='flex items-center justify-between py-5 font-medium'>
       {/* Logo and Caring Nanny Title */}
@@ -97,18 +101,24 @@ const Navbar = () => {
       </div>
 
       {/* Mobile Menu */}
-      <div className={`absolute top-0 right-0 bottom-0 overflow-hidden bg-white transition-all ${visible ? 'w-full' : 'w-0'}`}>
-        <div className='flex flex-col text-gray-600'>
-          <div onClick={() => setVisible(false)} className='flex items-center gap-4 p-3 cursor-pointer'>
-            <img className='h-4 rotate-180' src={dropdownIcon} alt="Back" />
-            <p>Back</p>
+      {visible && (
+        <div className='fixed inset-0 z-50 flex'>
+          {/* Overlay */}
+          <div className='absolute inset-0 bg-black opacity-50' onClick={closeMenu}></div>
+          
+          {/* Side Menu */}
+          <div className='relative bg-white w-2/3 max-w-xs h-full transition-all flex flex-col text-gray-600'>
+            <div onClick={closeMenu} className='flex items-center gap-4 p-3 cursor-pointer'>
+              <img className='h-4 rotate-180' src={dropdownIcon} alt="Back" />
+              <p>Back</p>
+            </div>
+            <NavLink onClick={closeMenu} className='py-2 pl-6 border' to='/'>HOME</NavLink>
+            <NavLink onClick={closeMenu} className='py-2 pl-6 border' to='/babysitter'>BABYSITTER</NavLink>
+            <NavLink onClick={closeMenu} className='py-2 pl-6 border' to='/about'>ABOUT</NavLink>
+            <NavLink onClick={closeMenu} className='py-2 pl-6 border' to='/contact'>CONTACT</NavLink>
           </div>
-          <NavLink onClick={() => setVisible(false)} className='py-2 pl-6 border' to='/'>HOME</NavLink>
-          <NavLink onClick={() => setVisible(false)} className='py-2 pl-6 border' to='/babysitter'>BABYSITTER</NavLink>
-          <NavLink onClick={() => setVisible(false)} className='py-2 pl-6 border' to='/about'>ABOUT</NavLink>
-          <NavLink onClick={() => setVisible(false)} className='py-2 pl-6 border' to='/contact'>CONTACT</NavLink>
         </div>
-      </div>
+      )}
     </div>
   );
 };
