@@ -368,7 +368,8 @@ app.post("/order/validate", async (req, res) => {
     console.log(err);
     res.status(500).json({ msg: "Error saving order to database" });
   }
-});app.post('/feedback', authenticate, async (req, res) => {
+});
+app.post('/feedback', authenticate, async (req, res) => {
   try {
     const { nannyId, feedback, rating } = req.body;
     const userId = req.user.userId; // Assuming user ID is extracted from the token via middleware

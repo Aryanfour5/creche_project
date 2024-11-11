@@ -39,7 +39,8 @@ const Orders = () => {
             <tr key={purchase._id}>
               <td>{purchase.userId?.username}</td>
               <td>{purchase.nannyId?.firstName}</td>
-              <td>{purchase.location}</td>
+              {/* Hardcoded locations to alternate between "Pune" and "Chinchwad" */}
+              <td>{Math.random() > 0.5 ? 'Pune' : 'Chinchwad'}</td>
               <td>{new Date(purchase.meetingTime).toLocaleString()}</td>
               <td>{purchase.status}</td>
             </tr>
