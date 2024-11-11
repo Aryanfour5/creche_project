@@ -82,12 +82,13 @@ const Contact = () => {
             <p className="text-gray-700">+91 9991268863</p>
           </div>
         </motion.div>
-        
       </div>
     </div>
   );
 };
 
 export default Contact;
+
+
 
 

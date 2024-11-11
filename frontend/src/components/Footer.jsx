@@ -63,14 +63,14 @@ const Footer = () => {
               <FaPhone className="text-indigo-700" /> 
               <div>
                 <p className="font-semibold">Call Us</p>
-                <p>+91 9991268863</p>
+                <p>+91 98765 43210</p>
               </div>
             </li>
             <li className="flex items-center gap-3">
               <FaEnvelope className="text-indigo-700" /> 
               <div>
                 <p className="font-semibold">Email Us</p>
-                <p>info@caringnany.in</p>
+                <p>info@medisync.in</p>
               </div>
             </li>
             <li className="flex items-center gap-3">
@@ -100,5 +100,7 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
 
 

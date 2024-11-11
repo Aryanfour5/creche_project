@@ -30,4 +30,3 @@ const OurPolicy = () => {
 };
 
 export default OurPolicy;
-
