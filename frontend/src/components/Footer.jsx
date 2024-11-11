@@ -48,7 +48,7 @@ const Footer = () => {
               </NavLink>
             </li>
             <li>
-              <NavLink to="/terms-conditions" className="hover:text-indigo-500 transition duration-300">
+              <NavLink to="/terms-and-conditions" className="hover:text-indigo-500 transition duration-300">
                 Terms & Conditions
               </NavLink>
             </li>

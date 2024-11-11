@@ -1,6 +1,6 @@
 // src/App.jsx
-import React, { useState } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -16,6 +16,8 @@ import BabySitter from './pages/BabySitter';
 import PurchasedNannies from './pages/PurchasedNannies';
 import ChatBot from './pages/ChatBot';
 import Feedback from './pages/FeedbackForm';
+import PrivacyPolicy from './pages/PrivacyPolicy'; // Import PrivacyPolicy component
+import TermsAndConditions from './pages/TermsAndConditions';
 
 const App = () => {
   return (
@@ -31,9 +33,11 @@ const App = () => {
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<SignUp />} />
         <Route path='/profile' element={<MyProfile />} />
-        <Route path="/Purchased" element={<PurchasedNannies />} />
-        <Route path="/chatbot" element={<ChatBot />} /> {/* Add the route for ChatBot */}
+        <Route path='/purchased' element={<PurchasedNannies />} />
+        <Route path='/chatbot' element={<ChatBot />} /> {/* ChatBot route */}
         <Route path='/feedback' element={<Feedback />} />
+        <Route path='/privacy-policy' element={<PrivacyPolicy />} /> {/* PrivacyPolicy route */}
+        <Route path='/terms-and-conditions' element={<TermsAndConditions />} />
       </Routes>
       <Footer />
     </div>
