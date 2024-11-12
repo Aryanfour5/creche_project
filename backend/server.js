@@ -35,14 +35,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(cors({
-  origin: ['*',
-    'https://creche-project-alpha.vercel.app/',
-    'http://localhost:3000', // Existing frontend
-    'http://localhost:5174'  // New frontend
+  origin: [
+    'https://creche-project-alpha.vercel.app',
+    'http://localhost:3000', 
+    'http://localhost:5174'
   ],
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
-  credentials: true // If you need to send cookies with the request
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
 }));
+
 
 app.use(express.json());
 app.use((req, res, next) => {
