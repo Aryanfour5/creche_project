@@ -16,6 +16,7 @@ import BabySitter from './pages/BabySitter';
 import PurchasedNannies from './pages/PurchasedNannies';
 import ChatBot from './pages/ChatBot';
 import Feedback from './pages/FeedbackForm';
+import NannyBot from './components/NannyBot';
 
 const App = () => {
   return (
