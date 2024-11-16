@@ -35,6 +35,7 @@ const App = () => {
         <Route path="/chatbot" element={<ChatBot />} /> {/* Add the route for ChatBot */}
         <Route path='/feedback' element={<Feedback />} />
       </Routes>
+      <NannyBot />
       <Footer />
     </div>
   );
