@@ -83,15 +83,7 @@ const Navbar = () => {
         >
           CONTACT
         </NavLink>
-        <NavLink
-          to='/purchased'
-          className={({ isActive }) =>
-            `flex flex-col items-center gap-1 ${isActive ? 'border-b-2 border-blue-500' : ''}`
-          }
-        >
-          PURCHASES
-        </NavLink>
-        
+      
       </ul>
 
       {/* Profile, Cart, and Chatbot Icons */}
