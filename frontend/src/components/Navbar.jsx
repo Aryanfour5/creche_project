@@ -5,6 +5,7 @@ import menuIcon from '../assets/frontend_assets/menu_icon.png';
 import dropdownIcon from '../assets/frontend_assets/dropdown_icon.png';
 import { Link, NavLink, useNavigate } from 'react-router-dom';
 
+
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -82,6 +83,15 @@ const Navbar = () => {
         >
           CONTACT
         </NavLink>
+        <NavLink
+          to='/purchased'
+          className={({ isActive }) =>
+            `flex flex-col items-center gap-1 ${isActive ? 'border-b-2 border-blue-500' : ''}`
+          }
+        >
+          PURCHASES
+        </NavLink>
+        
       </ul>
 
       {/* Profile, Cart, and Chatbot Icons */}
@@ -142,4 +152,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
