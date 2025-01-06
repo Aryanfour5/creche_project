@@ -24,4 +24,3 @@ Note: Refer to each directory’s README file for detailed documentation, config
 4. Authentication: JWT (JSON Web Tokens) for secure login
 5. Payment Integration: Razorpay 
 6. Cloud Storage: cloudinary for image storage
-7.Deployment:
