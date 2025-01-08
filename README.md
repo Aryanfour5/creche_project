@@ -1,6 +1,8 @@
 Welcome to Caring Nanny – a web application designed to connect parents with trusted nannies, simplifying the process of finding and booking childcare services. The platform provides an easy-to-use interface for both parents and nannies, with features such as profile management, nanny booking, and appointment scheduling.
 
 Note: Refer to each directory’s README file for detailed documentation, configuration, and installation guides.
+**Project Video 📹**  
+   [Watch the Project Demo Video](https://drive.google.com/file/d/1LIhi3OKxn9q4ka5lAu5a-t7FwSGmnfH6/view?usp=sharing)
 
 🌟 Features
 1. Nanny Profile Management 📋: Nannies can create and manage their profiles, showcasing their experience, certifications, and availability.
@@ -24,3 +26,14 @@ Note: Refer to each directory’s README file for detailed documentation, config
 4. Authentication: JWT (JSON Web Tokens) for secure login
 5. Payment Integration: Razorpay 
 6. Cloud Storage: cloudinary for image storage
+
+## Contributors
+
+We would like to thank the following contributors for their hard work and contributions:
+
+- [Atul](https://github.com/goyalxatul) 
+- [Esha Sangra](https://github.com/eshasangra)
+- [Aryan Bachute ](https://github.com/Aryanfour5)
+- [Hriday Thaler](https://github.com/thakerhriday)
+- [Ayushi Mahajan ](https://github.com/ayushimahajan295)
+
