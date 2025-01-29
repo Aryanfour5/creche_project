@@ -34,6 +34,6 @@ We would like to thank the following contributors for their hard work and contri
 - [Atul](https://github.com/goyalxatul) 
 - [Esha Sangra](https://github.com/eshasangra)
 - [Aryan Bachute ](https://github.com/Aryanfour5)
-- [Hriday Thaler](https://github.com/thakerhriday)
+- [Hriday Thaker](https://github.com/thakerhriday)
 - [Ayushi Mahajan ](https://github.com/ayushimahajan295)
 
