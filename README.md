@@ -1,4 +1,3 @@
-# creche_project
 # Caring Nanny 
 
 Welcome to **Caring Nanny** – a web application designed to seamlessly connect parents with trusted nannies. Our platform simplifies the process of finding, booking, and managing childcare, offering an intuitive interface for both parents and nannies.
