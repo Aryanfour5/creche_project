@@ -45,7 +45,7 @@ Welcome to **Caring Nanny** – a web application designed to seamlessly connect
 
 ---
 
-## 🛠Tech Stack
+## Tech Stack
 
 - **Frontend**: React, TailwindCSS, JavaScript
 - **Backend**: Node.js, Express.js
