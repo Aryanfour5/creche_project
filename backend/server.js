@@ -32,7 +32,7 @@ const PORT = process.env.PORT || 5000;
 const app = express();
 connectCloudinary();
 connectDB();
-const __filename = fileURLToPath(import.meta.url);
+//const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(cors({
@@ -457,10 +457,13 @@ app.post('/api/nanny/book-appointment/:nannyId', authenticate, async (req, res) 
     }
   });
 // Start server
-app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
-});
-
+if (process.env.NODE_ENV !== 'test') {
+  const PORT = process.env.PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 Server running on port ${PORT}`);
+  });
+}
+export default app;
 
 
 
