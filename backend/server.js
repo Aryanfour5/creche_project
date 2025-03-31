@@ -22,6 +22,7 @@ import crypto from 'crypto';
 ; // Cloudinary config
 import imageRouter from './routes/imageRoutes.js'; // Your new image routes
 import Feedback from './models/Feedback.js';
+import Order from './models/OrderModel.js';
 //import purchasedNanniesRoute from "./routes/PurchasedNanniesRoutes.js";
 // Load environment variables
 dotenv.config();
@@ -314,6 +315,147 @@ function getRandomRating(min = 3, max = 4.9) {
   return parseFloat((Math.random() * (max - min) + min).toFixed(1));
 }
 
+const GOOGLE_GENAI_API_KEY = 'AIzaSyDfOdD4zaN63PnYRKtLZxPWEL3YQYaBop4'; // Replace with your actual API key
+
+// The correct Google GenAI endpoint
+const GOOGLE_GENAI_ENDPOINT = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent';
+
+// Middleware to parse JSON request bodies
+
+
+
+app.post('/api/generate-content', async (req, res) => {
+  try {
+      const prompt = req.body.prompt || "Give me some tips about babysitting as a nanny"; // Default prompt if none is provided
+
+      // Create the request body for Google's API
+      const requestBody = {
+          prompt: { text: prompt },
+          model: "text-bison-001" // Replace with your model name if needed
+      };
+
+      // Send the request to the Google GenAI API
+      const response = await axios.post(
+          `${GOOGLE_GENAI_ENDPOINT}?key=${GOOGLE_GENAI_API_KEY}`, 
+          requestBody, 
+          {
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+          }
+      );
+
+      // Handle and return the generated content in the response
+      const generatedText = response.data?.candidates?.[0]?.output || "No content generated";
+      res.json({ text: generatedText });
+
+  } catch (error) {
+      console.error('Error response data:', error.response?.data);
+      console.error('Error generating content:', error);
+      res.status(500).json({ error: 'Error generating content' });
+  }
+});
+
+const adminEmail = 'aryanbachute063@gmail.com'; // Admin's email
+
+// Mail setup (using Nodemailer)
+const transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+      user: process.env.EMAIL_USER, // Sender email from .env file
+      pass: process.env.EMAIL_PASS, // Sender email password from .env file (or app password)
+  },
+});
+
+const sendEmail = (to, subject, text) => {
+    if (!to) {
+        console.error('Recipient email is missing!');
+        return Promise.reject(new Error('Recipient email is missing'));
+    }
+
+    const mailOptions = {
+        from: 'bachutearyan@gmail.com',
+        to: to,
+        subject: subject,
+        text: text,
+    };
+
+    return transporter.sendMail(mailOptions);
+};
+
+app.post('/api/nanny/book-appointment/:nannyId', authenticate, async (req, res) => {
+    const { nannyId } = req.params;
+    const { userLocation, appointmentDate, meetingTime } = req.body;
+    const userId = req.user.userId;
+  
+    if (!meetingTime) {
+      return res.status(400).json({ message: "Meeting time is required." });
+    }
+  
+    try {
+      const appointmentDateTime = new Date(`${appointmentDate}T${meetingTime}:00.000Z`);
+      const appointment = new Appointment({
+        userId,
+        nannyId,
+        location: userLocation,
+        meetingTime: appointmentDateTime,
+      });
+  
+      await appointment.save();
+  
+      // Retrieve user and nanny details for the email
+      const user = await User.findById(userId);
+      const nanny = await Nanny.findById(nannyId);
+  
+      if (!user || !nanny) {
+        return res.status(404).json({ message: "User or nanny not found." });
+      }
+  
+      // Log user and nanny email to verify they exist
+      console.log('User Email:', user.email);
+      console.log('Nanny Email:', nanny.contactEmail);
+  
+      // Send confirmation email to the user
+      const emailSubject = "Appointment Confirmation";
+      const emailText = `
+        Hi ${user.username},
+  
+        Your appointment with ${nanny.firstName} has been booked successfully!
+  
+        Appointment Details:
+        - Date: ${appointmentDate}
+        - Time: ${meetingTime}
+        - Location: ${userLocation}
+  
+        Thank you for choosing our service!
+      `;
+  
+      await sendEmail(user.email, emailSubject, emailText);
+  
+      // Send confirmation email to the nanny
+      const nannyEmailSubject = "New Appointment Booking";
+      const nannyEmailText = `
+        Hi ${nanny.firstName},
+  
+        You have a new appointment booked with ${user.username}!
+  
+        Appointment Details:
+        - Date: ${appointmentDate}
+        - Time: ${meetingTime}
+        - Location: ${userLocation}
+        - User: ${user.username}
+  
+        Please confirm your availability.
+      `;
+  
+      await sendEmail(nanny.contactEmail, nannyEmailSubject, nannyEmailText);
+      
+      res.status(200).json({ message: 'Appointment booked successfully!' });
+    } catch (error) {
+      console.error('Error booking appointment:', error);
+      res.status(500).json({ message: 'Error booking appointment. Please try again later.' });
+    }
+  });
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);

@@ -16,7 +16,10 @@ import BabySitter from './pages/BabySitter';
 import PurchasedNannies from './pages/PurchasedNannies';
 import ChatBot from './pages/ChatBot';
 import Feedback from './pages/FeedbackForm';
-
+import NannyBot from './components/NannyBot';
+import PrivacyPolicy from  './pages/PrivacyPolicy'; 
+import OurServices from './pages/OurServices';
+import TermsAndConditions from './pages/TermsAndConditions';
 const App = () => {
   return (
     <div className='px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]'>
@@ -34,7 +37,13 @@ const App = () => {
         <Route path="/Purchased" element={<PurchasedNannies />} />
         <Route path="/chatbot" element={<ChatBot />} /> {/* Add the route for ChatBot */}
         <Route path='/feedback' element={<Feedback />} />
+        <Route path='/privacy-policy' element={<PrivacyPolicy />} />
+        <Route path='/our-services' element={<OurServices />} /> {/* Route for Our Services */}
+        <Route path='/terms-and-condition' element={ <TermsAndConditions />} />
       </Routes>
+      <NannyBot />
+      <OurPolicy />
+
       <Footer />
     </div>
   );

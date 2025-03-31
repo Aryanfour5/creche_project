@@ -15,7 +15,7 @@ const BabySitter = () => {
   useEffect(() => {
     const fetchNannies = async () => {
       try {
-        const response = await axios.post('https://creche-project-k3km.vercel.app/api/nanny/list');
+        const response = await axios.post('http://localhost:5000/api/nanny/list');
         if (response.data.success) {
           setNannies(response.data.nannies || []);
         } else {
@@ -47,7 +47,7 @@ const BabySitter = () => {
       const decoded = jwtDecode(token);
       const userId = decoded.id;
 
-      await axios.post('https://creche-project-k3km.vercel.app/api/cart', {
+      await axios.post('http://localhost:5000/api/cart', {
         nannyId: nanny._id,
         firstName: nanny.firstName,
         lastName: nanny.lastName,
@@ -86,7 +86,7 @@ const BabySitter = () => {
       const userId = decoded.id;
 
       const response = await axios.post(
-        'https://creche-project-k3km.vercel.app/feedback',
+        'http://localhost:5000/feedback',
         { nannyId: selectedNanny._id, userId, feedback, rating },
         {
           headers: {

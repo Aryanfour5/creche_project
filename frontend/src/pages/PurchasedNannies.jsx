@@ -9,20 +9,23 @@ import 'react-toastify/dist/ReactToastify.css';
 const PurchasedNannies = () => {
     const [purchasedNannies, setPurchasedNannies] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [selectedDate, setSelectedDate] = useState(null);
     const [userLocation, setUserLocation] = useState("123 Main St, Anytown");
-    const [showCalendar, setShowCalendar] = useState({});
 
     useEffect(() => {
         const fetchPurchasedNannies = async () => {
             try {
-                const response = await axios.get('https://creche-project-k3km.vercel.app/api/nanny/user/purchased-nannies', {
+                const response = await axios.get('http://localhost:5000/api/nanny/user/purchased-nannies', {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem('token')}`
                     }
                 });
-                console.log("Fetched Nannies Response:", response);
-                setPurchasedNannies(response.data.nannies);
+                // Initialize each nanny with showCalendar and selectedDate properties
+                const nanniesWithState = response.data.nannies.map(nanny => ({
+                    ...nanny,
+                    showCalendar: false,
+                    selectedDate: null,
+                }));
+                setPurchasedNannies(nanniesWithState);
             } catch (error) {
                 console.error("Error fetching purchased nannies:", error);
             } finally {
@@ -34,17 +37,18 @@ const PurchasedNannies = () => {
     }, []);
 
     const handleBookAppointment = async (nannyId) => {
-        if (!selectedDate) {
-            toast.warn("Please select a date and time.", { position: toast.POSITION.TOP_CENTER });
+        const nanny = purchasedNannies.find(n => n.nannyId === nannyId);
+        if (!nanny.selectedDate) {
+            toast.warn("Please select a date and time.", { position: "top-center" });
             return;
         }
-
-        const formattedDate = format(selectedDate, 'yyyy-MM-dd');
-        const formattedTime = format(selectedDate, 'HH:mm');
-
+    
+        const formattedDate = format(nanny.selectedDate, 'yyyy-MM-dd');
+        const formattedTime = format(nanny.selectedDate, 'HH:mm');
+    
         try {
             const response = await axios.post(
-                `https://creche-project-k3km.vercel.app/api/nanny/book-appointment/${nannyId}`,
+                `http://localhost:5000/api/nanny/book-appointment/${nannyId}`,
                 { 
                     userLocation, 
                     appointmentDate: formattedDate, 
@@ -57,13 +61,32 @@ const PurchasedNannies = () => {
                 }
             );
             console.log('Appointment booked successfully:', response.data);
-            toast.success('Appointment booked successfully!', { position: toast.POSITION.TOP_CENTER });
-            setShowCalendar((prev) => ({ ...prev, [nannyId]: false }));
+    
+            // Show success toast and alert
+            toast.success('Appointment booked successfully!', { position: "top-center" });
+            window.alert('Your appointment has been successfully booked!');
+    
+            // Clear the cart by resetting the purchasedNannies state
+            setPurchasedNannies([]);
         } catch (error) {
             console.error('Error booking appointment:', error);
             const errorMessage = error.response?.data?.message || 'Error booking appointment. Please try again.';
-            toast.error(errorMessage, { position: toast.POSITION.TOP_CENTER });
+            toast.error(errorMessage, { position: "top-center" });
         }
+    };
+    
+    
+
+    const toggleCalendar = (nannyId) => {
+        setPurchasedNannies(prev => 
+            prev.map(n => n.nannyId === nannyId ? { ...n, showCalendar: !n.showCalendar } : n)
+        );
+    };
+
+    const handleDateChange = (date, nannyId) => {
+        setPurchasedNannies(prev => 
+            prev.map(n => n.nannyId === nannyId ? { ...n, selectedDate: date } : n)
+        );
     };
 
     if (loading) return <div className="text-center py-5">Loading...</div>;
@@ -81,20 +104,17 @@ const PurchasedNannies = () => {
                                     <p className="text-gray-600">Purchase Date: {new Date(nanny.purchaseDate).toLocaleDateString()}</p>
                                 </div>
                                 <button 
-                                    onClick={() => {
-                                        setShowCalendar(prev => ({ ...prev, [nanny.nannyId]: !prev[nanny.nannyId] }));
-                                        setSelectedDate(null); 
-                                    }} 
+                                    onClick={() => toggleCalendar(nanny.nannyId)}
                                     className="bg-blue-600 text-white py-2 px-4 rounded-lg transition duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-300"
                                 >
                                     Book Appointment
                                 </button>
                             </div>
-                            {showCalendar[nanny.nannyId] && (
+                            {nanny.showCalendar && (
                                 <div className="mt-2">
                                     <DatePicker
-                                        selected={selectedDate}
-                                        onChange={date => setSelectedDate(date)}
+                                        selected={nanny.selectedDate}
+                                        onChange={date => handleDateChange(date, nanny.nannyId)}
                                         showTimeSelect
                                         timeFormat="HH:mm"
                                         timeIntervals={15}

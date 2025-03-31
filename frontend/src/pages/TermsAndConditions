@@ -1,0 +1,31 @@
+/* src/components/TermsAndConditions.css */
+.terms-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.terms-title {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.terms-subtitle {
+    font-size: 1.5rem;
+    font-weight: semi-bold;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.terms-text {
+    font-size: 1rem;
+    color: #4a4a4a;
+    margin-bottom: 1rem;
+}
+
+.terms-link {
+    color: #1e90ff;
+    text-decoration: underline;
+}

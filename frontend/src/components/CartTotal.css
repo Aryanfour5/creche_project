@@ -1,68 +1,67 @@
 /* CartTotal.css */
 .cart-container {
-    max-width: 600px;
-    margin: 30px auto;
-    padding: 20px;
-    background-color: #f9f9f9;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .cart-title {
-    text-align: center;
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    color: #333;
-  }
-  
-  .cart-items {
-    border-top: 1px solid #ccc;
-    padding-top: 20px;
-  }
-  
-  .cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px;
-    border-bottom: 1px solid #eee;
-    transition: background-color 0.3s;
-  }
-  
-  .cart-item:hover {
-    background-color: #f0f8ff; /* Light blue on hover */
-  }
-  
-  .item-info h2 {
-    font-size: 1.5em;
-    margin: 0;
-    color: #4a90e2; /* Blue color for names */
-  }
-  
-  .item-info p {
-    margin: 5px 0;
-    color: #777;
-  }
-  
-  .item-total {
-    font-size: 1.2em;
-    color: #27ae60; /* Green color for totals */
-    font-weight: bold;
-  }
-  
-  .cart-total {
-    margin-top: 20px;
-    font-size: 1.8em;
-    font-weight: bold;
-    text-align: center;
-    color: #333;
-  }
-  
-  .empty-cart {
-    text-align: center;
-    font-size: 1.5em;
-    color: #999;
-    margin-top: 50px;
-  }
-  
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+.cart-title {
+  text-align: center;
+  font-size: 2.5em;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.cart-items {
+  border-top: 1px solid #ccc;
+  padding-top: 20px;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #eee;
+  transition: background-color 0.3s;
+}
+
+.cart-item:hover {
+  background-color: #f0f8ff; /* Light blue on hover */
+}
+
+.item-info h2 {
+  font-size: 1.5em;
+  margin: 0;
+  color: #4a90e2; /* Blue color for names */
+}
+
+.item-info p {
+  margin: 5px 0;
+  color: #777;
+}
+
+.item-total {
+  font-size: 1.2em;
+  color: #27ae60; /* Green color for totals */
+  font-weight: bold;
+}
+
+.cart-total {
+  margin-top: 20px;
+  font-size: 1.8em;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+}
+
+.empty-cart {
+  text-align: center;
+  font-size: 1.5em;
+  color: #999;
+  margin-top: 50px;
+}

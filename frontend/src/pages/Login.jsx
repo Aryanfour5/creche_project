@@ -12,14 +12,15 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      const response = await axios.post('https://creche-project-k3km.vercel.app/api/user/login', {
+      const response = await axios.post('http://localhost:5000/api/user/login', {
         email,
         password,
       });
-      console.log('Response:', response.data);
-     
+
+      // Assuming the backend returns a token
       localStorage.setItem('token', response.data.token); // Store token in local storage
-console.log(response.data.token);
+
+      // Redirect to home or another page
       navigate('/'); // Use useNavigate to redirect
     } catch (err) {
       toast.error('Invalid email or password');

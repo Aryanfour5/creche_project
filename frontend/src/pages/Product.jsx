@@ -11,7 +11,7 @@ const Product = () => {
   useEffect(() => {
     const fetchBabysitter = async () => {
       try {
-        const response = await axios.get(`https://creche-project-k3km.vercel.app/api/babysitter/${id}`); // Adjust API endpoint
+        const response = await axios.get(`http://localhost:5000/api/babysitter/${id}`); // Adjust API endpoint
         setBabysitter(response.data.babysitter); // Adjust for the babysitter data structure
       } catch (error) {
         console.error('Error fetching babysitter:', error);
@@ -26,7 +26,7 @@ const Product = () => {
   const handleAddToCart = async () => {
     try {
       // Assume the babysitter object is already fetched
-      await axios.post('https://creche-project-k3km.vercel.app/api/cart', {
+      await axios.post('http://localhost:5000/api/cart', {
         babysitterId: babysitter._id,
         firstName: babysitter.firstName,
         lastName: babysitter.lastName,

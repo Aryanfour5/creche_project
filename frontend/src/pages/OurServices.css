@@ -1,0 +1,63 @@
+/* src/styles/OurServices.css */
+
+.services-container {
+    padding-top: 4rem;
+    margin-top: 5rem;
+    text-align: center;
+  }
+  
+  .services-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4f46e5; /* Indigo 700 */
+    margin-bottom: 2rem;
+  }
+  
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+  
+  @media (min-width: 640px) {
+    .services-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .services-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  .service-card {
+    background-color: white;
+    border: 1px solid #e5e7eb; /* Gray 200 */
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    max-width: 20rem;
+    margin: 0 auto;
+  }
+  
+  .service-icon {
+    color: #4f46e5; /* Indigo 700 */
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .service-title-card {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #4f46e5; /* Indigo 600 */
+    margin-bottom: 0.5rem;
+  }
+  
+  .service-description {
+    color: #4b5563; /* Gray 700 */
+  }
+  

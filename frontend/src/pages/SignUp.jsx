@@ -19,7 +19,7 @@ const SignUp = () => {
     setLoading(true);
 
     try {
-      await axios.post('https://creche-project-k3km.vercel.app/api/user/signup', {
+      await axios.post('http://localhost:5000/api/user/signup', {
         username,
         email,
         password,
