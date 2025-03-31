@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "jest",
+    "test": "jest --detectOpenHandles --verbose",
     "build": "echo 'No build step for backend'",
     "start": "nodemon server.js"
   },
